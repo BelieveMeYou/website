@@ -5,76 +5,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Final Project: Sketchpad</title>
     <style>
-        body {
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-            color: #333;
-            line-height: 1.6;
-            padding: 20px;
+            display: flex;
+            min-height: 100vh;
+            background-color: #f5f5f5;
         }
-        
-        header {
-            background: #007bff;
-            color: #fff;
-            padding: 20px 0;
+
+        /* Sidebar styling */
+        .sidebar {
+            width: 250px;
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            position: fixed;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
             text-align: center;
+            margin-bottom: 20px;
         }
-        
-        header h1 {
-            margin: 0;
+
+        .sidebar a {
+            display: block;
+            color: #ecf0f1;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 4px;
+            transition: background 0.3s;
         }
-        
-        section {
-            margin: 20px 0;
+
+        .sidebar a:hover {
+            background: #34495e;
+        }
+
+        /* Main content area */
+        .content {
+            margin-left: 270px;
             padding: 20px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            flex-grow: 1;
         }
-        
+
         h1, h2 {
-            color: #007bff;
+            color: #2c3e50;
         }
 
         p {
-            font-size: 1.1em;
+            margin: 10px 0;
+            line-height: 1.6;
         }
 
-        footer {
-            text-align: center;
-            padding: 10px 0;
-            margin-top: 20px;
-            background: #007bff;
-            color: #fff;
+        section {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        iframe {
+            width: 100%;
+            height: 480px;
+            border: none;
+            border-radius: 8px;
         }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>Final Project: Sketchpad</h1>
-</header>
+<div class="sidebar">
+    <h2>Final Project: Sketchpad</h2>
+    <a href="#overview">Project Overview</a>
+    <a href="#details">Project Details</a>
+    <a href="#demo">Project Demo</a>
+</div>
 
-<section>
-    <h2>Project Overview</h2>
-    <p>Our project for EEC 172 was a sketchpad that a user can use to draw using the CC3200 board and the OLED.</p>
-</section>
+<div class="content">
+    <section id="overview">
+        <h1>Project Overview</h1>
+        <p>Our project for EEC 172 was a sketchpad that a user can use to draw using the CC3200 board and the OLED.</p>
+    </section>
 
-<section>
-    <h2>Project Details</h2>
-    <p>We used previous labs to interact with the board using a remote where you were able to change the colors of the drawing tool, resize the tool, and clear the board. We also used the accelerometers on the board to allow for the user to draw on the board using the board.</p>
-</section>
+    <section id="details">
+        <h2>Project Details</h2>
+        <p>We used previous labs to interact with the board using a remote where you were able to change the colors of the drawing tool, resize the tool, and clear the board. We also used the accelerometers on the board to allow for the user to draw on the board using the board.</p>
+    </section>
 
-<section>
-    <h2>Project Demo</h2>
-    <iframe src="https://drive.google.com/file/d/1e0UH-8rFs9HtCdxzYWHKix6lQyudGPRq/preview" width="640" height="480" allow="autoplay"></iframe>
-</section>
-
-<footer>
-    &copy; 2025 Final Project | EEC 172
-</footer>
+    <section id="demo">
+        <h2>Project Demo</h2>
+        <p>Watch our project in action below:</p>
+        <iframe src="https://drive.google.com/file/d/1e0UH-8rFs9HtCdxzYWHKix6lQyudGPRq/preview" allow="autoplay"></iframe>
+    </section>
+</div>
 
 </body>
 </html>
