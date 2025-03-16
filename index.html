@@ -53,13 +53,23 @@
 <div class="content">
     <section id="overview">
         <h1>Project Overview</h1>
-        <p>Our project for EEC 172 was a sketchpad that a user can use to draw using the CC3200 board, a remote, and the OLED.</p>
+        <p>Our project for EEC 172 was a sketchpad that a user can use to draw on using the CC3200 board, a remote, and the OLED.</p>
     </section>
 
     <section id="details">
         <h2>Project Details</h2>
-        <p>We used previous labs to interact with the board using a remote where you were able to change the colors of the drawing tool, resize the tool, and clear the board. This was using the remote's button signals and IR reciever which was then decoded to do those features that was just mentioned. Furthermore, we incuded a cursor mode where the user could move around the board without drawing anything.
-            To let the user draw on the board we used the accelerometers to allow for the user to draw on the board as they moved the board around.</p>
+        <h3>Remote </h3>
+        <p>The remote sends signals to an IR sensor, which is connected to a GPIO input pin of the board. The pulses sent via the remote are detected via GPIO interrupts and decoded to determine which button was pressed. This section of the code was based on work from previous labs. Based on which button was pressed, different actions occur on the OLED. </p>
+        <h3>Accelerometer</h3>
+        <p>The board queries its built-in accelerometer for its current state, specifically the gravity vector’s components in the x and y direction, via I2C protocol. Using this information, the position of the cursor is updated to follow the gravitational acceleration of the board. This section of the code was also based on work from previous labs.</p>
+        <h3>OLED display</h3>
+        <p>In order to save the drawing as an image file and move the cursor while preserving the drawing, the RGB565 color of each pixel is saved in a 128 by 128 matrix of integers, implemented by modifying the baseline Adafruit_OLED library. Before the cursor is drawn, the new positions of each of its pixels are saved along with the colors that the cursor would cover up. As the cursor’s position is updated, previous images of the cursor are filled back in with the colors the canvas had before, creating seamless movement while preserving the user’s drawing. The cursor is also drawn when in brush mode, since it can be hard to tell where the position of the brush is otherwise. The cursor is drawn in a cross-shape to make it easier to represent with a small number of pixels, and “expands” in size by creating space between pixels to indicate the size of the brush without needing to adjust the number of pixels stored.
+The brush effect is created by simply drawing a filled circle of the current brush color and radius at the position of the cursor during each frame.</p>
+        <h3>AWS (incomplete)</h3>
+        <p>
+	One of our initial target features was the ability to save user drawings as an image file and send it through AWS. The incomplete implementation of this feature involved a modified version of our final version of the canvas storage system where instead of storing the RGB565 colors of each pixel in a 128 by 128 integer array, we created a 4bit color lookup table so that pixel color values could be stored in a 128 by 64 char array. One char entry would store the color values of two pixels. This 4bit color storage and lookup table would be used to encode the drawing as a BMP image file with a color depth of 4. After the file header, info header, and color lookup table were added, the stored char values could be added directly to the file data row by row. Using a color depth of 4 and storing the canvas data during drawing time as chars were decisions made to save memory.
+	After the file was created, it would be sent to an AWS S3 bucket using an HTTP PUT request. The bucket had an attached policy that allowed PutObject requests. The format of the PUT request and the bucket permissions and access point were not fully set up correctly before the project had to be completed, so this feature went unused in the final version.
+</p>
     </section>
 
     <section id="demo">
